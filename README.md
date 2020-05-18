@@ -15,3 +15,24 @@
 ### Prerequisites
 *	[Docker](https://www.docker.com/)
 *	[Docker Compose](https://docs.docker.com/compose/install/)
+
+### Project Tree
+├── Dockerfile
+├── assets
+│   └── logo.jpg
+├── config
+│   ├── nginx.conf
+│   └── prometheus.yml
+└── docker-compose.yml
+
+### Deployment
+Clone repo to your server. I suggest using ```/opt``` directory
+```less
+sudo git clone https://github.com/eduardevops/dockerized-monitoring.git
+```
+
+Navigate to the project folder
+```less
+cd /path/to/dockerized-monitoring
+docker-compose up -d
+```
