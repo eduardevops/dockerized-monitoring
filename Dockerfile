@@ -1,4 +1,5 @@
+# Define base image.
 FROM prom/prometheus
 
-
-ADD prometheus.yml /etc/prometheus/
+# Copying prometheus main config file.
+COPY ./config/prometheus.yml /etc/prometheus/
