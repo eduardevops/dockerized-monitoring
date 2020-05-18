@@ -17,6 +17,7 @@
 *	[Docker Compose](https://docs.docker.com/compose/install/)
 
 ### Project Tree
+```less
 ├── Dockerfile
 ├── assets
 │   └── logo.jpg
@@ -24,6 +25,7 @@
 │   ├── nginx.conf
 │   └── prometheus.yml
 └── docker-compose.yml
+```
 
 ### Deployment
 Clone repo to your server. I suggest using ```/opt``` directory
