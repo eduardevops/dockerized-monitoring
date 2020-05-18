@@ -1,7 +1,5 @@
 ### Dockerized Prometheus, Grafana and Google Cadvisor
 
-### In Progress. Do not use
-
 ![Logo](./assets/logo.jpg)
 
 ### Status
