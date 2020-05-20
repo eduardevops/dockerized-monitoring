@@ -1,0 +1,45 @@
+version: '3'
+services:
+  prometheus:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: prometheus
+    restart: always
+    volumes:
+      - ./data/prometheus/config:/etc/prometheus/
+      - ./data/prometheus/data:/prometheus
+    command:
+      - '-config.file=/etc/prometheus/prometheus.yml'
+      - '-storage.local.path=/prometheus'
+      - '-alertmanager.url=http://prometheus:9093'
+    ports:
+      - 9090:9090
+    links:
+      - cadvisor
+      - node-exporter
+
+  node-exporter:
+   image: prom/node-exporter
+   container_name: node_exporter
+   restart: always
+
+  cadvisor:
+    image: google/cadvisor
+    container_name: cadvisor
+    restart: always
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+    - 3000:3000
+    restart: always
+    links:
+      - prometheus
+    volumes:
+      - ./data/grafana:/var/lib/grafana
