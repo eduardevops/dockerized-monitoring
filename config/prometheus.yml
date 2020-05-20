@@ -9,6 +9,8 @@ global:
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
 
+#static_configs:
+#  - targets: ['localhost:9090','cadvisor:8080','node-exporter:9100']
 
 rule_files:
   - '/etc/prometheus/alert.rules'
@@ -16,7 +18,6 @@ rule_files:
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'prometheus'
-
     static_configs:
       - targets: ['prometheus:9090']
 
@@ -27,3 +28,7 @@ scrape_configs:
   - job_name: 'docker'
     static_configs:
       - targets: ['localhost:9323']
+
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['localhost:8080']
