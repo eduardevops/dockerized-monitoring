@@ -18,9 +18,9 @@ services:
       - node-exporter
 
   node-exporter:
-   image: prom/node-exporter
-   container_name: node_exporter
-   restart: always
+    image: prom/node-exporter
+    container_name: node_exporter
+    restart: always
 
   cadvisor:
     image: google/cadvisor
