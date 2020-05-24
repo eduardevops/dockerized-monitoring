@@ -7,29 +7,73 @@ services:
       dockerfile: Dockerfile
     container_name: prometheus
     ports:
-    - 9090:9090
+      - 9090:9090
     command:
-    - --config.file=/etc/prometheus/prometheus.yml
-    - --web.route-prefix=/
-    - --storage.tsdb.retention.time=200h
-    - --web.enable-lifecycle
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --web.route-prefix=/
+      - --storage.tsdb.retention.time=200h
+      - --web.enable-lifecycle
+    links:
+      - cadvisor
+      - node-exporter
+
+  node-exporter:
+    image: prom/node-exporter
+    container_name: node_exporter
+    restart: always
+    ports:
+      - 9100:9100
+
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter
+    container_name: nginx-exporter
+    restart: always
+    ports:
+      - 9113:9113
+    entrypoint:
+      - /usr/bin/exporter
+      - -nginx.scrape-uri
+      - https://php.eduardevops.io/metrics
+
+    command:
+      - --nginx.scrape.uri=https://php.eduardevops.io/metrics
+      - --nginx.retries=10
+      - --web.telemetry-path=/prometheus
+    volumes:
+      - nginx_data:/var/log/nginx:ro
+
+  #alertmanager:
+  #  image: prom/alertmanager
+  #  container_name: alertmanager
+  #  volumes:
+  #    - ./alertmanager:/etc/alertmanager
+  #  command:
+  #    - --config.file=/etc/alertmanager/config.yml
+  #    - --storage.path=/alertmanager
+  #  restart: always
+  #  ports:
+  #    - 9093:9093
+
   cadvisor:
     image: google/cadvisor
     container_name: cadvisor
-    ports:
-    - 8080:8080
+    restart: always
     volumes:
-    - /:/rootfs:ro
-    - /var/run:/var/run:rw
-    - /sys:/sys:ro
-    - /var/lib/docker/:/var/lib/docker:ro
-  redis:
-    image: redis:latest
-    container_name: redis
-    # ports:
-    #- 6379:6379
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
   grafana:
-      image: grafana/grafana
-      container_name: grafana
-      ports:
+    image: grafana/grafana
+    container_name: grafana
+    volumes:
+      - grafana-data:/var/lib/grafana
+    ports:
       - 3000:3000
+    restart: always
+    links:
+      - prometheus
+
+volumes:
+  grafana-data:
+  nginx_data:
