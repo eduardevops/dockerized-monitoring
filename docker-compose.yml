@@ -34,18 +34,20 @@ services:
       - /usr/bin/exporter
       - -nginx.scrape-uri
       - https://php.eduardevops.io/metrics
+      - -nginx.retries=10
+      - -web.telemetry-path=/metrics
 
-    command:
-      - --nginx.scrape.uri=https://php.eduardevops.io/metrics
-      - --nginx.retries=10
-      # - --web.telemetry-path=/prometheus
-      - --web.telemetry-path=/metrics
+    #command:
+    #  - --nginx.scrape.uri=https://php.eduardevops.io/metrics
+    #  - --nginx.retries=10
+    #  - --web.telemetry-path=/prometheus
+    #  - --web.telemetry-path=/metrics
     volumes:
       - nginx_data:/var/log/nginx:ro
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "5m"
+    # logging:
+    #  driver: "json-file"
+    #  options:
+    #    max-size: "5m"
 
   #alertmanager:
   #  image: prom/alertmanager
