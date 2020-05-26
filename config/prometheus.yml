@@ -28,3 +28,11 @@ scrape_configs:
     metrics_path: '/prometheus'
     static_configs:
       - targets: ['nginx-exporter:9113']
+
+
+# vim /etc/docker/daemon.json
+
+# {
+#  "metrics-addr" : "127.0.0.1:9323",
+#  "experimental" : true
+# }
