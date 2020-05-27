@@ -24,17 +24,9 @@ scrape_configs:
       - targets: ['localhost:8080']
 
   - job_name: 'nginx-exported'
-    scrape_interval: 1m
-    metrics_path: '/prometheus'
+    metrics_path: '/metrics'
     static_configs:
       - targets: ['nginx-exporter:9113']
 
 
-# vim /etc/docker/daemon.json
-
-# {
-#  "metrics-addr" : "127.0.0.1:9323",
-#  "experimental" : true
-# }
-
-# curl localhost:9113/metrics
+netstat -tulpn

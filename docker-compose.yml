@@ -33,33 +33,9 @@ services:
     entrypoint:
       - /usr/bin/exporter
       - -nginx.scrape-uri
-      - https://php.eduardevops.io/metrics
+      - http://64.227.125.65/metrics
       - -nginx.retries=10
       - -web.telemetry-path=/metrics
-
-    #command:
-    #  - --nginx.scrape.uri=https://php.eduardevops.io/metrics
-    #  - --nginx.retries=10
-    #  - --web.telemetry-path=/prometheus
-    #  - --web.telemetry-path=/metrics
-    volumes:
-      - nginx_data:/var/log/nginx:ro
-    # logging:
-    #  driver: "json-file"
-    #  options:
-    #    max-size: "5m"
-
-  #alertmanager:
-  #  image: prom/alertmanager
-  #  container_name: alertmanager
-  #  volumes:
-  #    - ./alertmanager:/etc/alertmanager
-  #  command:
-  #    - --config.file=/etc/alertmanager/config.yml
-  #    - --storage.path=/alertmanager
-  #  restart: always
-  #  ports:
-  #    - 9093:9093
 
   cadvisor:
     image: google/cadvisor
@@ -70,6 +46,7 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+  
   grafana:
     image: grafana/grafana
     container_name: grafana
