@@ -9,7 +9,6 @@ global:
 
 rule_files:
 
-
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
@@ -21,12 +20,9 @@ scrape_configs:
 
   - job_name: 'cadvisor'
     static_configs:
-      - targets: ['localhost:8080']
+      - targets: ['cadvisor:8080']
 
   - job_name: 'nginx-exported'
     metrics_path: '/metrics'
     static_configs:
       - targets: ['nginx-exporter:9113']
-
-
-netstat -tulpn
