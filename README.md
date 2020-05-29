@@ -36,7 +36,3 @@ Navigate to the project folder
 cd /path/to/dockerized-monitoring
 docker-compose up -d
 ```
-
-netstat -tulpn | grep LISTEN
-
-docker run -d -p 9113:9113 nginx/nginx-prometheus-exporter -nginx.scrape-uri http://64.227.125.65/metrics
