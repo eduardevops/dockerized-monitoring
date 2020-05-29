@@ -1,5 +1,4 @@
 # Prometheus global config
-
 global:
   scrape_interval:     20s
   evaluation_interval: 20s
@@ -31,6 +30,6 @@ scrape_configs:
     static_configs:
       - targets: ['alertmanager:9093']
 
-  - job_name: 'grafana-image-rendering-service'
+  - job_name: 'image-rendering'
     static_configs:
       - targets: ['renderer:8081']
