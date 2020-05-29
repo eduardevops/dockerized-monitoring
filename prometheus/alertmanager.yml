@@ -1,0 +1,47 @@
+global:
+  # The default SMTP From header field.
+  [ smtp_from: <tmpl_string> ]
+
+  # The default SMTP smarthost used for sending emails, including port number.
+  # Port number usually is 25, or 587 for SMTP over TLS (sometimes referred to as STARTTLS).
+  # Example: smtp.example.org:587
+  [ smtp_smarthost: <string> ]
+
+  # The default hostname to identify to the SMTP server.
+  [ smtp_hello: <string> | default = "localhost" ]
+
+  # SMTP Auth using CRAM-MD5, LOGIN and PLAIN. If empty, Alertmanager doesn't authenticate to the SMTP server.
+  [ smtp_auth_username: <string> ]
+
+  # SMTP Auth using LOGIN and PLAIN.
+  [ smtp_auth_password: <secret> ]
+
+  # SMTP Auth using PLAIN.
+  [ smtp_auth_identity: <string> ]
+
+  # SMTP Auth using CRAM-MD5.
+  [ smtp_auth_secret: <secret> ]
+
+  # The default SMTP TLS requirement.
+  # Note that Go does not support unencrypted connections to remote SMTP endpoints.
+  [ smtp_require_tls: <bool> | default = true ]
+
+
+global:
+  resolve_timeout: 5m
+route:
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  receiver: 'email-receiver'
+receivers:
+- name: 'null'
+- name: email-receiver
+  email_configs:
+  - to: freelancer@eduardevops.io
+    from: freelancer@eduardevops.io
+    smarthost: mail.privateemail.com:587
+    auth_username: "freelancer@eduardevops.io"
+    auth_identity: "freelancer@eduardevops.io"
+    auth_password: ".8YkyHx3(NT7)"
+    send_resolved: true

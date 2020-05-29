@@ -1,26 +1,47 @@
 version: '3'
 services:
   prometheus:
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
     container_name: prometheus
-    ports:
-      - 9090:9090
+    restart: always
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --web.route-prefix=/
       - --storage.tsdb.retention.time=200h
       - --web.enable-lifecycle
-    links:
-      - cadvisor
-      - node-exporter
+    ports:
+      - 9090:9090
+
+  alertmanager:
+    image: prom/alertmanager
+    container_name: alertmanager
+    restart: always
+    volumes:
+      - ./prometheus/:/etc/alertmanager/
+    command:
+      - '-config.file=/etc/alertmanager/alertmanager.yml'
+      - '-storage.path=/alertmanager'
+    ports:
+      - 9093:9093
 
   node-exporter:
     image: prom/node-exporter
     container_name: node_exporter
     restart: always
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
     ports:
       - 9100:9100
 
@@ -62,4 +83,3 @@ services:
 
 volumes:
   grafana-data:
-  nginx_data:
