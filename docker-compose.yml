@@ -5,7 +5,7 @@ services:
     container_name: prometheus
     restart: always
     volumes:
-      - ./prometheus/:/etc/prometheus/
+      - ./configs/prometheus/:/etc/prometheus/
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --web.route-prefix=/
@@ -66,8 +66,11 @@ services:
     container_name: grafana
     restart: always
     volumes:
-      - grafana-data:/var/lib/grafana
+      - ./grafana/config/:/usr/share/grafana/conf/
+      - ./grafana/datasource/:/etc/grafana/provisioning/datasource/
+      - ./grafana/dashboards/:/var/lib/grafana/provisioning/dashboards/
     environment:
+      GF_SERVER_ROOT_URL: https://grafana.eduardevops.io/
       GF_RENDERING_SERVER_URL: http://renderer:8081/render
       GF_LOG_FILTERS: rendering:debug
     ports:
@@ -84,6 +87,3 @@ services:
       - 8081:8081
     environment:
       ENABLE_METRICS: 'true'
-
-volumes:
-  grafana-data:
