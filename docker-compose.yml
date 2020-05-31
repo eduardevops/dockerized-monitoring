@@ -5,7 +5,7 @@ services:
     container_name: prometheus
     restart: always
     volumes:
-      - ./configs/prometheus/:/etc/prometheus/
+      - ./prometheus/:/etc/prometheus/
     command:
       - --config.file=/etc/prometheus/prometheus.yml
       - --web.route-prefix=/
@@ -17,17 +17,17 @@ services:
       - cadvisor
       - node-exporter
 
-  alertmanager:
-    image: prom/alertmanager
-    container_name: alertmanager
-    restart: always
-    volumes:
-      - ./prometheus/:/etc/alertmanager/
-    command:
-      - --config.file=/etc/alertmanager/alertmanager.yml
-      - --storage.path=/alertmanager
-    ports:
-      - 9093:9093
+  #alertmanager:
+  #  image: prom/alertmanager
+  #  container_name: alertmanager
+  #  restart: always
+  #  volumes:
+  #    - ./prometheus/:/etc/alertmanager/
+  #  command:
+  #    - --config.file=/etc/alertmanager/alertmanager.yml
+  #    - --storage.path=/alertmanager
+  #  ports:
+  #    - 9093:9093
 
   node-exporter:
     image: prom/node-exporter
