@@ -17,18 +17,6 @@ services:
       - cadvisor
       - node-exporter
 
-  #alertmanager:
-  #  image: prom/alertmanager
-  #  container_name: alertmanager
-  #  restart: always
-  #  volumes:
-  #    - ./prometheus/:/etc/alertmanager/
-  #  command:
-  #    - --config.file=/etc/alertmanager/alertmanager.yml
-  #    - --storage.path=/alertmanager
-  #  ports:
-  #    - 9093:9093
-
   node-exporter:
     image: prom/node-exporter
     container_name: node_exporter
@@ -45,7 +33,7 @@ services:
     entrypoint:
       - /usr/bin/exporter
       - -nginx.scrape-uri
-      - http://64.227.125.65/metrics
+      - http://host_ip/metrics
       - -nginx.retries=10
       - -web.telemetry-path=/metrics
 
@@ -64,12 +52,11 @@ services:
   grafana:
     image: grafana/grafana
     container_name: grafana
+    user: root
     restart: always
     volumes:
       - grafana_data:/var/lib/grafana
       - ./grafana/config/:/usr/share/grafana/conf/
-      - ./grafana/datasource/:/etc/grafana/provisioning/datasource/
-      - ./grafana/dashboards/:/etc/grafana/provisioning/dashboards/
     environment:
       GF_SERVER_ROOT_URL: https://grafana.eduardevops.io/
       GF_RENDERING_SERVER_URL: http://renderer:8081/render
@@ -88,3 +75,6 @@ services:
       - 8081:8081
     environment:
       ENABLE_METRICS: 'true'
+
+volumes:
+  grafana_data:

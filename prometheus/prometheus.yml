@@ -26,10 +26,6 @@ scrape_configs:
     static_configs:
       - targets: ['nginx-exporter:9113']
 
-  #- job_name: 'alertmanager'
-  #  static_configs:
-  #    - targets: ['alertmanager:9093']
-
   - job_name: 'image-rendering'
     static_configs:
       - targets: ['renderer:8081']
