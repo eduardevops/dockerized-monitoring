@@ -2,17 +2,14 @@
 
 docker-compose up -d
 
-docker cp dashboards/* grafana:/
+chmod +x import.sh
 
-docker exec -ti grafana apk add --update curl
+docker exec -ti grafana mkdir /root/import
 
-curl 'http://admin:admin@localhost:3000/api/datasources' \
-    -X POST \
-    -H 'Content-Type: application/json;charset=UTF-8' \
-    --data-binary \
-    '{"name":"Prometheus","type":"prometheus","url":"http://prometheus:9090","access":"proxy","isDefault":true}'
+docker cp dashboards/docker.json grafana:/root/import
+docker cp dashboards/nginx.json grafana:/root/import
+docker cp dashboards/node.json grafana:/root/import
 
+docker cp import.sh grafana:/root/import
 
-curl -v -H 'Content-Type: application/json' -d docker.json http://localhost:3000/api/dashboards/db
-curl -v -H 'Content-Type: application/json' -d nginx.json http://localhost:3000/api/dashboards/db
-curl -v -H 'Content-Type: application/json' -d node.json http://localhost:3000/api/dashboards/db
+docker exec -it grafana sh /roo/import
