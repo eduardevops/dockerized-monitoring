@@ -18,11 +18,16 @@
 ```less
 ├── Dockerfile
 ├── assets
-│   └── logo.jpg
-├── config
-│   ├── nginx.conf
-│   └── prometheus.yml
-└── docker-compose.yml
+│   └── logo.png
+├── dashboards
+│   ├── docker.json
+│   ├── nginx.json
+│   └── node.json
+├── docker-compose.yml
+├── grafana
+│   └── defaults.ini
+└── prometheus
+    └── prometheus.yml
 ```
 
 ### Deployment
