@@ -33,11 +33,11 @@
 ### Deployment
 Clone repo to your server. I suggest using ```/opt``` directory
 ```less
-sudo git clone https://github.com/eduardevops/dockerized-monitoring.git
+sudo git clone https://github.com/eduardevops/dockerized-prometheus.git
 ```
 
 Navigate to the project folder
 ```less
-cd /path/to/dockerized-monitoring
+cd /path/to/dockerized-prometheus
 docker-compose up -d
 ```
