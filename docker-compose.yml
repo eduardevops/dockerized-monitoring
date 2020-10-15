@@ -52,12 +52,10 @@ services:
   grafana:
     build:
       context: .
-    #image: grafana/grafana
     container_name: grafana
     restart: always
     volumes:
-      - grafana_data:/var/lib/grafana
-      # - ./grafana/:/usr/share/grafana/conf/
+      - ./grafana_data:/var/lib/grafana
     environment:
       GF_SERVER_ROOT_URL: https://grafana.eduardevops.io/
       GF_RENDERING_SERVER_URL: http://renderer:8081/render
