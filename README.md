@@ -1,4 +1,4 @@
-### Dockerized Prometheus, Grafana and Google Cadvisor
+### Dockerized Monitoring Prometheus, Grafana and Google Cadvisor
 
 ![Logo](./assets/logo.png)
 
