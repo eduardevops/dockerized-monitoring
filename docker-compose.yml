@@ -57,7 +57,7 @@ services:
     volumes:
       - ./grafana_data:/var/lib/grafana
     environment:
-      GF_SERVER_ROOT_URL: https://grafana.eduardevops.io/
+      GF_SERVER_ROOT_URL: https://grafana.example.com/
       GF_RENDERING_SERVER_URL: http://renderer:8081/render
       GF_LOG_FILTERS: rendering:debug
     ports:
