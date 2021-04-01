@@ -3,7 +3,7 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./prometheus/:/etc/prometheus/
     command:
@@ -20,14 +20,14 @@ services:
   node-exporter:
     image: prom/node-exporter
     container_name: node_exporter
-    restart: always
+    restart: unless-stopped
     ports:
       - 9100:9100
 
   nginx-exporter:
     image: nginx/nginx-prometheus-exporter
     container_name: nginx-exporter
-    restart: always
+    restart: unless-stopped
     ports:
       - 9113:9113
     entrypoint:
@@ -40,7 +40,7 @@ services:
   cadvisor:
     image: google/cadvisor
     container_name: cadvisor
-    restart: always
+    restart: unless-stopped
     privileged:
       true
     volumes:
@@ -53,7 +53,7 @@ services:
     build:
       context: .
     container_name: grafana
-    restart: always
+    restart: unless-stopped
     volumes:
       - ./grafana_data:/var/lib/grafana
     environment:
@@ -69,7 +69,7 @@ services:
   renderer:
     image: grafana/grafana-image-renderer
     container_name: renderer
-    restart: always
+    restart: unless-stopped
     ports:
       - 8081:8081
     environment:
